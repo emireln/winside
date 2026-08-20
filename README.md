@@ -2,8 +2,6 @@
 
 <img src="assets/winside-banner.png" alt="Winside Banner" width="100%" />
 
-# Winside
-
 ### Next-Gen Windows 11 Deployment, Hardware Compatibility & Bypass Suite
 
 [![GitHub](https://img.shields.io/badge/GitHub-emireln%2Fwinside-blue?logo=github)](https://github.com/emireln/winside)
