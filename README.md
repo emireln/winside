@@ -17,7 +17,7 @@
 
 **Winside** is a modern, high-performance Windows 11 deployment, hardware compatibility audit, and bypass tool written in **C# (.NET 8 WPF)** featuring native **Windows 11 Fluent Mica & Acrylic** design.
 
-Developed by **Emir Tech Tools**.
+Developed by **Emir Tech Tools**, old ETT project (depracated & cancelled).
 
 ---
 
