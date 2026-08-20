@@ -1,12 +1,22 @@
-# Winside v2.0
+<div align="center">
+
+<img src="assets/winside-banner.png" alt="Winside Banner" width="100%" />
+
+# Winside
+
+### Next-Gen Windows 11 Deployment, Hardware Compatibility & Bypass Suite
 
 [![GitHub](https://img.shields.io/badge/GitHub-emireln%2Fwinside-blue?logo=github)](https://github.com/emireln/winside)
 [![Platform](https://img.shields.io/badge/Platform-Windows%2011%20%7C%2010-0078D4?logo=windows)](https://github.com/emireln/winside)
 [![.NET](https://img.shields.io/badge/.NET-8.0%20WPF-512BD4?logo=dotnet)](https://github.com/emireln/winside)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
-Modern, high-performance Windows 11 deployment, hardware compatibility audit, and bypass tool written in **C# (.NET 8 WPF)** with Windows 11 Fluent Mica styling.
+</div>
 
-**Repository**: [https://github.com/emireln/winside](https://github.com/emireln/winside)  
+---
+
+**Winside** is a modern, high-performance Windows 11 deployment, hardware compatibility audit, and bypass tool written in **C# (.NET 8 WPF)** featuring native **Windows 11 Fluent Mica & Acrylic** design.
+
 Developed by **Emir Tech Tools**.
 
 ---
@@ -45,12 +55,21 @@ winside/
 │       ├── caveman.md        # AI output compression & token optimization
 │       └── ponytail.md       # AI clean code & YAGNI guidelines
 ├── .gitignore                # Visual Studio & .NET ignore list
+├── assets/
+│   ├── winside-banner.png    # High-resolution README banner
+│   ├── winside-banner.svg    # Vector banner (background & centered logo)
+│   ├── winside-logo-squircle.svg # Desktop squircle logo
+│   ├── winside-icon.svg      # Theme-colored icon vector
+│   ├── winside-logo.png      # High-res app logo
+│   └── winside.ico           # Windows application icon
 ├── AGENTS.md                 # Agent configuration
 ├── GEMINI.md                 # Gemini assistant guidelines
+├── LICENSE                   # MIT License
 ├── README.md                 # Project documentation
 └── Winside/                  # Winside C# .NET 8 WPF Application
     ├── Winside.csproj
     ├── app.manifest          # RequireAdministrator elevation
+    ├── winside.ico           # Application icon
     ├── App.xaml / App.xaml.cs
     ├── MainWindow.xaml / MainWindow.xaml.cs
     ├── Models/

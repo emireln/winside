@@ -9,6 +9,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AssemblyName>Winside</AssemblyName>
     <ApplicationTitle>Winside</ApplicationTitle>
+    <ApplicationIcon>winside.ico</ApplicationIcon>
     <Company>Emir Tech Tools</Company>
     <Product>Winside</Product>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
