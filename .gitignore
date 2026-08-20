@@ -1,0 +1,39 @@
+## Build Results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+publish/
+*.publishproj
+
+## Visual Studio & IDEs
+.vs/
+.idea/
+.vscode/
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+*.userprefs
+
+## .NET & WPF Output
+*.dll
+*.exe
+*.pdb
+*.pfx
+*.publishsettings
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## Logs & Generated Files
+*.log
+*install_log.txt
+Windows11_Setup_Files/
+
+## OS Generated
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store

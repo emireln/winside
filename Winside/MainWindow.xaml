@@ -1,0 +1,319 @@
+<Window x:Class="Winside.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Winside - Windows 11 Deployment &amp; Compatibility Suite"
+        Height="720" Width="980"
+        MinHeight="620" MinWidth="820"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource MicaFallbackBgBrush}"
+        Foreground="{StaticResource TextPrimaryBrush}">
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> <!-- Title Header -->
+            <RowDefinition Height="*"/>    <!-- Tabs Content -->
+            <RowDefinition Height="Auto"/> <!-- Status Bar -->
+        </Grid.RowDefinitions>
+
+        <!-- Header Card with Windows 11 Depth & Elevation -->
+        <Border Grid.Row="0" Style="{StaticResource Win11CardStyle}" Margin="0,0,0,16" Padding="16,14">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="Winside" FontSize="22" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}"/>
+                        <Border Background="{StaticResource AccentActiveBrush}" CornerRadius="10" Padding="8,2" Margin="10,0,0,0" VerticalAlignment="Center">
+                            <TextBlock Text="v2.0" FontSize="11" FontWeight="Bold" Foreground="White"/>
+                        </Border>
+                    </StackPanel>
+                    <TextBlock Text="Next-Gen Windows 11 Deployment, Compatibility &amp; Bypass Suite • Emir Tech Tools" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,3,0,0"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Background="#1A107C41" BorderBrush="#336CCB5F" BorderThickness="1" CornerRadius="12" Padding="12,5" Margin="0,0,8,0">
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse Width="6" Height="6" Fill="{StaticResource SuccessBrush}" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="ADMINISTRATOR" FontSize="11" FontWeight="Bold" Foreground="{StaticResource SuccessBrush}"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="#1A0078D4" BorderBrush="#3360CDFF" BorderThickness="1" CornerRadius="12" Padding="12,5">
+                        <TextBlock Text="Windows 11 Fluent" FontSize="11" FontWeight="Bold" Foreground="{StaticResource AccentBrush}"/>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Centered Segmented Navigation & Tab Content -->
+        <TabControl Grid.Row="1" Style="{StaticResource Win11SegmentedTabControl}" x:Name="MainTabs">
+            
+            <!-- TAB 1: System Compatibility -->
+            <TabItem Header="  Hardware Compatibility  ">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="0,4,0,0">
+                        
+                        <!-- CPU Analysis Card -->
+                        <Border Style="{StaticResource Win11CardStyle}">
+                            <StackPanel>
+                                <TextBlock Text="Processor &amp; Instruction Features" FontSize="15" FontWeight="SemiBold" Foreground="{StaticResource AccentBrush}" Margin="0,0,0,10"/>
+                                <Grid Margin="0,2,0,8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="160"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Processor Name:" Foreground="{StaticResource TextSecondaryBrush}"/>
+                                    <TextBlock Grid.Column="1" x:Name="TxtCpuName" Text="Detecting..." FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}"/>
+                                </Grid>
+                                
+                                <Grid Margin="0,4,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="170"/>
+                                        <ColumnDefinition Width="170"/>
+                                        <ColumnDefinition Width="170"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="SSE4.2 Instruction:" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6" FontSize="12"/>
+                                        <Border x:Name="BadgeSse42" Background="#22FFFFFF" BorderBrush="{StaticResource SubtleBorderBrush}" BorderThickness="1" CornerRadius="6" Padding="10,4" HorizontalAlignment="Left">
+                                            <TextBlock x:Name="TxtSse42" Text="CHECKING..." FontWeight="Bold" FontSize="11" Foreground="{StaticResource TextPrimaryBrush}"/>
+                                        </Border>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="POPCNT Instruction:" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6" FontSize="12"/>
+                                        <Border x:Name="BadgePopcnt" Background="#22FFFFFF" BorderBrush="{StaticResource SubtleBorderBrush}" BorderThickness="1" CornerRadius="6" Padding="10,4" HorizontalAlignment="Left">
+                                            <TextBlock x:Name="TxtPopcnt" Text="CHECKING..." FontWeight="Bold" FontSize="11" Foreground="{StaticResource TextPrimaryBrush}"/>
+                                        </Border>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Text="Firmware Mode:" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6" FontSize="12"/>
+                                        <TextBlock x:Name="TxtFirmware" Text="Detecting..." FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,4,0,0"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="3" VerticalAlignment="Center">
+                                        <Button Content="Download Coreinfo" Style="{StaticResource Win11SecondaryButtonStyle}" Click="BtnCoreinfo_Click" HorizontalAlignment="Right"/>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Security & Hardware Specs Card -->
+                        <Border Style="{StaticResource Win11CardStyle}">
+                            <StackPanel>
+                                <TextBlock Text="Security &amp; System Resources" FontSize="15" FontWeight="SemiBold" Foreground="{StaticResource AccentBrush}" Margin="0,0,0,10"/>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="TPM 2.0 Module:" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,6"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="1" x:Name="TxtTpm" Text="Detecting..." FontWeight="SemiBold" Margin="0,6"/>
+
+                                    <TextBlock Grid.Row="0" Grid.Column="2" Text="Secure Boot State:" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,6"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="3" x:Name="TxtSecureBoot" Text="Detecting..." FontWeight="SemiBold" Margin="0,6"/>
+
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Installed Memory (RAM):" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,6"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" x:Name="TxtRam" Text="Detecting..." FontWeight="SemiBold" Margin="0,6"/>
+
+                                    <TextBlock Grid.Row="1" Grid.Column="2" Text="System Drive Free Space:" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,6"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="3" x:Name="TxtDiskSpace" Text="Detecting..." FontWeight="SemiBold" Margin="0,6"/>
+
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Current OS Version:" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,6"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" x:Name="TxtOsVersion" Text="Detecting..." FontWeight="SemiBold" Margin="0,6"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Overall Summary Card -->
+                        <Border Style="{StaticResource Win11CardStyle}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                    <TextBlock Text="System Evaluation Summary" FontSize="14" FontWeight="Bold" Foreground="{StaticResource AccentBrush}"/>
+                                    <TextBlock x:Name="TxtEvaluationSummary" Text="Assessing hardware compatibility..." Foreground="{StaticResource TextPrimaryBrush}" Margin="0,4,0,0" TextWrapping="Wrap"/>
+                                </StackPanel>
+                                <Button Grid.Column="1" Content="Refresh Hardware Audit" Style="{StaticResource Win11PrimaryButtonStyle}" Click="BtnRefreshAudit_Click" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- TAB 2: Bypass & Registry Tweaks -->
+            <TabItem Header="  Bypass &amp; Registry Tweaks  ">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="0,4,0,0">
+                        
+                        <Border Style="{StaticResource Win11CardStyle}">
+                            <StackPanel>
+                                <TextBlock Text="Windows 11 Setup Compatibility Bypasses" FontSize="15" FontWeight="SemiBold" Foreground="{StaticResource AccentBrush}" Margin="0,0,0,4"/>
+                                <TextBlock Text="Apply these registry tweaks to bypass Windows 11 hardware checks during clean installs and in-place upgrades." Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,14"/>
+
+                                <CheckBox x:Name="ChkTPM" Content="Bypass TPM 2.0 Check (LabConfig\BypassTPMCheck)" IsChecked="True" Style="{StaticResource Win11ToggleSwitchStyle}"/>
+                                <CheckBox x:Name="ChkSecureBoot" Content="Bypass Secure Boot Check (LabConfig\BypassSecureBootCheck)" IsChecked="True" Style="{StaticResource Win11ToggleSwitchStyle}"/>
+                                <CheckBox x:Name="ChkRAM" Content="Bypass Minimum RAM Check (LabConfig\BypassRAMCheck)" IsChecked="True" Style="{StaticResource Win11ToggleSwitchStyle}"/>
+                                <CheckBox x:Name="ChkCPU" Content="Bypass CPU Model &amp; Generation Check (LabConfig\BypassCPUCheck)" IsChecked="True" Style="{StaticResource Win11ToggleSwitchStyle}"/>
+                                <CheckBox x:Name="ChkStorage" Content="Bypass Storage &amp; Disk Size Check (LabConfig\BypassStorageCheck)" IsChecked="True" Style="{StaticResource Win11ToggleSwitchStyle}"/>
+                                <CheckBox x:Name="ChkMoSetup" Content="Allow In-Place Upgrades with Unsupported TPM or CPU (MoSetup\AllowUpgradesWithUnsupportedTPMOrCPU)" IsChecked="True" Style="{StaticResource Win11ToggleSwitchStyle}"/>
+                                <CheckBox x:Name="ChkBypassNro" Content="Bypass Microsoft Account (MSA) Requirement on Windows 11 Setup (OOBE\BypassNRO)" IsChecked="True" Style="{StaticResource Win11ToggleSwitchStyle}"/>
+                                
+                                <Separator Background="{StaticResource SubtleBorderBrush}" Margin="0,14"/>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Apply Selected Bypasses" Style="{StaticResource Win11PrimaryButtonStyle}" Click="BtnApplyBypasses_Click" Margin="0,0,10,0"/>
+                                    <Button Content="Verify Active Registry State" Style="{StaticResource Win11SecondaryButtonStyle}" Click="BtnVerifyRegistry_Click" Margin="0,0,10,0"/>
+                                    <Button Content="Reset / Clean All Bypass Keys" Style="{StaticResource Win11DangerButtonStyle}" Click="BtnResetBypasses_Click"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Style="{StaticResource Win11CardStyle}">
+                            <StackPanel>
+                                <TextBlock Text="Important Tips for Unsupported Hardware" FontSize="14" FontWeight="Bold" Foreground="{StaticResource WarningBrush}" Margin="0,0,0,6"/>
+                                <TextBlock Text="• Windows 11 24H2 / 25H2 strictly requires CPUs with SSE4.2 and POPCNT instruction sets. The /product server setup mode bypasses hardware checks smoothly for in-place upgrades." Foreground="{StaticResource TextSecondaryBrush}" TextWrapping="Wrap"/>
+                                <TextBlock Text="• Always ensure you have a complete backup of your critical files before performing an in-place upgrade." Foreground="{StaticResource TextSecondaryBrush}" Margin="0,4,0,0" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- TAB 3: ISO Manager & Setup Launcher -->
+            <TabItem Header="  ISO Manager &amp; Installer  ">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="0,4,0,0">
+
+                        <!-- ISO Download & Picker Card -->
+                        <Border Style="{StaticResource Win11CardStyle}">
+                            <StackPanel>
+                                <Grid Margin="0,0,0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Step 1: Choose or Download Windows 11 ISO" FontSize="15" FontWeight="SemiBold" Foreground="{StaticResource AccentBrush}"/>
+                                    <Button Grid.Column="1" Content="Download ISO from Microsoft" Style="{StaticResource Win11SecondaryButtonStyle}" Click="BtnDownloadIso_Click"/>
+                                </Grid>
+
+                                <TextBlock Text="Select your downloaded Windows 11 ISO file:" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,4,0,4"/>
+                                <Grid Margin="0,0,0,12">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox x:Name="TxtIsoPath" Text="" VerticalAlignment="Center"/>
+                                    <Button Grid.Column="1" Content="Browse ISO..." Style="{StaticResource Win11SecondaryButtonStyle}" Margin="8,0,0,0" Click="BtnBrowseIso_Click"/>
+                                </Grid>
+
+                                <TextBlock Text="Target Extraction Destination Folder:" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,4,0,4"/>
+                                <Grid Margin="0,0,0,14">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox x:Name="TxtExtractDest" Text="" VerticalAlignment="Center"/>
+                                    <Button Grid.Column="1" Content="Browse Folder..." Style="{StaticResource Win11SecondaryButtonStyle}" Margin="8,0,0,0" Click="BtnBrowseDest_Click"/>
+                                </Grid>
+
+                                <!-- Extraction Controls -->
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                    <Button x:Name="BtnExtractIso" Content="Mount &amp; Extract ISO" Style="{StaticResource Win11PrimaryButtonStyle}" Click="BtnExtractIso_Click" Margin="0,0,10,0"/>
+                                    <Button x:Name="BtnCancelExtract" Content="Cancel Extraction" Style="{StaticResource Win11SecondaryButtonStyle}" Click="BtnCancelExtract_Click" IsEnabled="False"/>
+                                </StackPanel>
+
+                                <!-- Progress section -->
+                                <StackPanel Margin="0,10,0,0" x:Name="ExtractProgressPanel" Visibility="Collapsed">
+                                    <ProgressBar x:Name="ExtractProgressBar" Value="0" Maximum="100"/>
+                                    <Grid Margin="0,6,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock x:Name="TxtExtractStatus" Text="Extracting..." Foreground="{StaticResource TextSecondaryBrush}" FontSize="12"/>
+                                        <TextBlock Grid.Column="1" x:Name="TxtExtractPercent" Text="0%" Foreground="{StaticResource AccentBrush}" FontWeight="Bold" FontSize="12"/>
+                                    </Grid>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Launch Setup Card -->
+                        <Border Style="{StaticResource Win11CardStyle}">
+                            <StackPanel>
+                                <TextBlock Text="Step 2: Windows 11 Setup Launcher" FontSize="15" FontWeight="SemiBold" Foreground="{StaticResource AccentBrush}" Margin="0,0,0,10"/>
+                                
+                                <TextBlock Text="Choose Setup Execution Mode:" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
+                                <RadioButton x:Name="RbServerMode" Content="Server Upgrade Mode (Recommended - /product server trick for bypassing checks)" IsChecked="True"/>
+                                <RadioButton x:Name="RbStandardMode" Content="Standard Setup Mode (Standard Windows 11 setup wizard)"/>
+                                <RadioButton x:Name="RbCustomMode" Content="Custom Switch Mode:"/>
+                                <TextBox x:Name="TxtCustomArgs" Text="/auto upgrade /quiet" Margin="24,2,0,12" IsEnabled="{Binding IsChecked, ElementName=RbCustomMode}"/>
+
+                                <Button x:Name="BtnLaunchSetup" Content="Launch Windows 11 Setup Now" Style="{StaticResource Win11PrimaryButtonStyle}" Click="BtnLaunchSetup_Click" Margin="0,4,0,0" Height="42" FontSize="14"/>
+                            </StackPanel>
+                        </Border>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- TAB 4: Live Diagnostics & Logs -->
+            <TabItem Header="  Live Log Console  ">
+                <Grid Margin="0,4,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Style="{StaticResource Win11CardStyle}" Padding="12">
+                        <ListBox x:Name="LogListBox" Background="Transparent" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Margin="2,2">
+                                        <TextBlock Text="[" Foreground="{StaticResource TextTertiaryBrush}" FontFamily="Consolas" FontSize="12"/>
+                                        <TextBlock Text="{Binding FormattedTime}" Foreground="{StaticResource TextSecondaryBrush}" FontFamily="Consolas" FontSize="12"/>
+                                        <TextBlock Text="] " Foreground="{StaticResource TextTertiaryBrush}" FontFamily="Consolas" FontSize="12"/>
+                                        <TextBlock Text="{Binding Message}" Foreground="{Binding LevelColor}" FontFamily="Consolas" FontSize="12" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Border>
+
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                        <Button Content="Copy All Logs" Style="{StaticResource Win11SecondaryButtonStyle}" Click="BtnCopyLogs_Click" Margin="0,0,8,0"/>
+                        <Button Content="Open Desktop Log File" Style="{StaticResource Win11SecondaryButtonStyle}" Click="BtnOpenLogFile_Click" Margin="0,0,8,0"/>
+                        <Button Content="Clear Console" Style="{StaticResource Win11SecondaryButtonStyle}" Click="BtnClearLogs_Click"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+
+        <!-- Status Bar -->
+        <Border Grid.Row="2" Style="{StaticResource Win11CardStyle}" Margin="0,12,0,0" Padding="14,8">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="TxtGlobalStatus" Text="Ready." Foreground="{StaticResource TextSecondaryBrush}" FontSize="12"/>
+                <TextBlock Grid.Column="1" Text="Emir Tech Tools • All Rights Reserved" Foreground="{StaticResource TextTertiaryBrush}" FontSize="11"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

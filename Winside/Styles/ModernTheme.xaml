@@ -1,0 +1,356 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Windows 11 Design System: Color Palette -->
+    <Color x:Key="Win11AccentColor">#60CDFF</Color>
+    <Color x:Key="Win11AccentActiveColor">#0078D4</Color>
+    <Color x:Key="Win11AccentHoverColor">#40B9FF</Color>
+    <Color x:Key="Win11SuccessColor">#6CCB5F</Color>
+    <Color x:Key="Win11WarningColor">#FCE100</Color>
+    <Color x:Key="Win11ErrorColor">#FF99A4</Color>
+
+    <!-- Translucent Mica & Acrylic Layering Brushes -->
+    <SolidColorBrush x:Key="MicaFallbackBgBrush" Color="#1E1E22" />
+    <SolidColorBrush x:Key="LayerFillColorDefault" Color="#0DFFFFFF" />
+    <SolidColorBrush x:Key="CardBackgroundFill" Color="#22272E" />
+    <SolidColorBrush x:Key="CardHoverBackgroundFill" Color="#292E36" />
+    <SolidColorBrush x:Key="AcrylicSurfaceBrush" Color="#D920242B" />
+
+    <!-- Text Brushes -->
+    <SolidColorBrush x:Key="TextPrimaryBrush" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="TextSecondaryBrush" Color="#9DA7B3" />
+    <SolidColorBrush x:Key="TextTertiaryBrush" Color="#6E7681" />
+
+    <!-- Accent Brushes -->
+    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource Win11AccentColor}" />
+    <SolidColorBrush x:Key="AccentActiveBrush" Color="{StaticResource Win11AccentActiveColor}" />
+    <SolidColorBrush x:Key="AccentHoverBrush" Color="{StaticResource Win11AccentHoverColor}" />
+    <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource Win11SuccessColor}" />
+    <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource Win11WarningColor}" />
+    <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource Win11ErrorColor}" />
+
+    <!-- Border & Elevation Specular Lighting Highlights -->
+    <LinearGradientBrush x:Key="CardElevationBorderBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#30FFFFFF" Offset="0.0" />
+        <GradientStop Color="#0AFFFFFF" Offset="1.0" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="CardActiveBorderBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#8060CDFF" Offset="0.0" />
+        <GradientStop Color="#2060CDFF" Offset="1.0" />
+    </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="SubtleBorderBrush" Color="#1EFFFFFF" />
+
+    <!-- Elevation Drop Shadow Effect -->
+    <DropShadowEffect x:Key="SubtleElevationEffect"
+                      BlurRadius="16"
+                      Direction="270"
+                      Opacity="0.25"
+                      ShadowDepth="3"
+                      Color="#000000" />
+
+    <DropShadowEffect x:Key="HoverGlowEffect"
+                      BlurRadius="12"
+                      Direction="270"
+                      Opacity="0.35"
+                      ShadowDepth="1"
+                      Color="#60CDFF" />
+
+    <!-- Windows 11 Card Style with Lighting Highlight & Soft Geometry -->
+    <Style x:Key="Win11CardStyle" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource CardBackgroundFill}" />
+        <Setter Property="BorderBrush" Value="{StaticResource CardElevationBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Padding" Value="18" />
+        <Setter Property="Margin" Value="0,0,0,12" />
+        <Setter Property="Effect" Value="{StaticResource SubtleElevationEffect}" />
+    </Style>
+
+    <!-- Windows 11 Primary Accent Button (Rounded Pill / Soft Geometry) -->
+    <Style x:Key="Win11PrimaryButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource AccentActiveBrush}" />
+        <Setter Property="Foreground" Value="#FFFFFF" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Padding" Value="18,9" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="btnBorder"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{StaticResource CardElevationBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="btnBorder" Property="Background" Value="{StaticResource AccentHoverBrush}" />
+                            <Setter TargetName="btnBorder" Property="Effect" Value="{StaticResource HoverGlowEffect}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="btnBorder" Property="Background" Value="#005A9E" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="btnBorder" Property="Background" Value="#2D333B" />
+                            <Setter Property="Foreground" Value="{StaticResource TextTertiaryBrush}" />
+                            <Setter TargetName="btnBorder" Property="BorderBrush" Value="Transparent" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Windows 11 Secondary / Subtle Button Style -->
+    <Style x:Key="Win11SecondaryButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource LayerFillColorDefault}" />
+        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Padding" Value="16,8" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="btnBorder"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{StaticResource SubtleBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="btnBorder" Property="Background" Value="#1AFFFFFF" />
+                            <Setter TargetName="btnBorder" Property="BorderBrush" Value="{StaticResource CardElevationBorderBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="btnBorder" Property="Background" Value="#0FFFFFFF" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="btnBorder" Property="Background" Value="Transparent" />
+                            <Setter Property="Foreground" Value="{StaticResource TextTertiaryBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Windows 11 Danger Button Style -->
+    <Style x:Key="Win11DangerButtonStyle" TargetType="Button" BasedOn="{StaticResource Win11PrimaryButtonStyle}">
+        <Setter Property="Background" Value="#8B1A1A" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="btnBorder"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{StaticResource CardElevationBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="btnBorder" Property="Background" Value="#A82828" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="btnBorder" Property="Background" Value="#661010" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Windows 11 Centered Segmented Navigation TabBar -->
+    <Style x:Key="Win11SegmentedTabControl" TargetType="TabControl">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabControl">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <!-- Centered Segmented Pill Container -->
+                        <Border Grid.Row="0"
+                                HorizontalAlignment="Center"
+                                Background="#1AFFFFFF"
+                                BorderBrush="{StaticResource SubtleBorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="12"
+                                Padding="4"
+                                Margin="0,0,0,16">
+                            <TabPanel IsItemsHost="True" />
+                        </Border>
+
+                        <ContentPresenter Grid.Row="1" ContentSource="SelectedContent" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Windows 11 Segmented TabItem Style -->
+    <Style TargetType="TabItem">
+        <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Padding" Value="16,8" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabItem">
+                    <Border x:Name="tabBorder"
+                            Background="Transparent"
+                            CornerRadius="8"
+                            Padding="{TemplateBinding Padding}"
+                            Margin="2,0">
+                        <ContentPresenter ContentSource="Header" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="tabBorder" Property="Background" Value="{StaticResource AccentActiveBrush}" />
+                            <Setter Property="Foreground" Value="#FFFFFF" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsSelected" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="tabBorder" Property="Background" Value="#1FFFFFFF" />
+                            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Windows 11 Fluent Modern Toggle Switch Style for CheckBoxes -->
+    <Style x:Key="Win11ToggleSwitchStyle" TargetType="CheckBox">
+        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Margin" Value="0,6" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <Grid VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Switch Track -->
+                        <Border x:Name="track"
+                                Grid.Column="0"
+                                Width="40" Height="20"
+                                CornerRadius="10"
+                                Background="#33FFFFFF"
+                                BorderBrush="{StaticResource SubtleBorderBrush}"
+                                BorderThickness="1"
+                                Margin="0,0,12,0">
+                            <!-- Thumb -->
+                            <Ellipse x:Name="thumb"
+                                     Width="14" Height="14"
+                                     Fill="#FFFFFF"
+                                     HorizontalAlignment="Left"
+                                     Margin="3,0,0,0" />
+                        </Border>
+
+                        <ContentPresenter Grid.Column="1" VerticalAlignment="Center" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="track" Property="Background" Value="{StaticResource AccentActiveBrush}" />
+                            <Setter TargetName="track" Property="BorderBrush" Value="{StaticResource AccentHoverBrush}" />
+                            <Setter TargetName="thumb" Property="HorizontalAlignment" Value="Right" />
+                            <Setter TargetName="thumb" Property="Margin" Value="0,0,3,0" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="track" Property="Opacity" Value="0.9" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- RadioButton Style -->
+    <Style TargetType="RadioButton">
+        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Margin" Value="0,8" />
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+
+    <!-- Windows 11 Modern Progress Bar Style -->
+    <Style TargetType="ProgressBar">
+        <Setter Property="Height" Value="6" />
+        <Setter Property="Background" Value="#22FFFFFF" />
+        <Setter Property="Foreground" Value="{StaticResource AccentActiveBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ProgressBar">
+                    <Grid x:Name="Root">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="3" />
+                        <Border x:Name="PART_Track" CornerRadius="3" ClipToBounds="True">
+                            <Border x:Name="PART_Indicator"
+                                    HorizontalAlignment="Left"
+                                    Background="{TemplateBinding Foreground}"
+                                    CornerRadius="3" />
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Windows 11 Modern TextBox -->
+    <Style TargetType="TextBox">
+        <Setter Property="Background" Value="#1AFFFFFF" />
+        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource SubtleBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="12,7" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="CaretBrush" Value="#FFFFFF" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="8">
+                        <ScrollViewer x:Name="PART_ContentHost" Margin="0" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource CardElevationBorderBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+                            <Setter TargetName="border" Property="Background" Value="#24FFFFFF" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
