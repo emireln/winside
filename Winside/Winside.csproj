@@ -17,6 +17,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Resource Include="winside.ico" />
+    <Resource Include="winside-logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.Management" Version="8.0.0" />
   </ItemGroup>
 

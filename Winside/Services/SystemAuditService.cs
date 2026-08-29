@@ -23,8 +23,8 @@ namespace Winside.Services
                     string? name = obj["Name"]?.ToString()?.Trim();
                     if (!string.IsNullOrWhiteSpace(name))
                     {
-                        result.CpuName = name;
-                        InferCpuFeatures(name, result);
+                        result.CpuName = Regex.Replace(name, @"\s+", " ");
+                        InferCpuFeatures(result.CpuName, result);
                         break;
                     }
                 }
@@ -33,11 +33,11 @@ namespace Winside.Services
             {
                 LoggerService.Instance.LogWarning($"WMI CPU detection fallback: {ex.Message}");
                 string regCpu = Registry.GetValue(@"HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\CentralProcessor\0", "ProcessorNameString", string.Empty)?.ToString() ?? "Unknown CPU";
-                result.CpuName = regCpu.Trim();
+                result.CpuName = Regex.Replace(regCpu.Trim(), @"\s+", " ");
                 InferCpuFeatures(result.CpuName, result);
             }
 
-            // 2. TPM 2.0 Check
+            // 2. TPM Check
             try
             {
                 using var tpmSearcher = new ManagementObjectSearcher(@"root\CIMV2\Security\MicrosoftTpm", "SELECT IsActivated_InitialValue, SpecVersion FROM Win32_Tpm");
@@ -47,21 +47,40 @@ namespace Winside.Services
                     result.TpmPresent = true;
                     foreach (ManagementObject tpm in tpmItems)
                     {
-                        string? spec = tpm["SpecVersion"]?.ToString();
-                        result.TpmVersion = !string.IsNullOrWhiteSpace(spec) ? $"TPM {spec}" : "TPM Present";
+                        string? spec = tpm["SpecVersion"]?.ToString()?.Trim();
+                        result.TpmVersion = !string.IsNullOrWhiteSpace(spec) ? $"TPM {spec}" : "TPM 2.0 Present";
                         break;
                     }
                 }
                 else
                 {
                     result.TpmPresent = false;
-                    result.TpmVersion = "Not Detected";
+                    result.TpmVersion = "Não Detectado";
                 }
             }
             catch
             {
-                result.TpmPresent = false;
-                result.TpmVersion = "Not Detected / Disabled";
+                // Fallback check from Device Manager / Registry
+                try
+                {
+                    using var pnpSearcher = new ManagementObjectSearcher("SELECT Name, DeviceID FROM Win32_PnPEntity WHERE Service='TPM' OR DeviceID LIKE 'ACPI\\MSFT0101%'");
+                    var pnpItems = pnpSearcher.Get();
+                    if (pnpItems.Count > 0)
+                    {
+                        result.TpmPresent = true;
+                        result.TpmVersion = "TPM 2.0 (Detectado via ACPI/PnP)";
+                    }
+                    else
+                    {
+                        result.TpmPresent = false;
+                        result.TpmVersion = "Não Detectado / Desativado na UEFI";
+                    }
+                }
+                catch
+                {
+                    result.TpmPresent = false;
+                    result.TpmVersion = "Não Detectado / Desativado";
+                }
             }
 
             // 3. Secure Boot Check
@@ -91,18 +110,18 @@ namespace Winside.Services
                     result.FirmwareType = fwInt switch
                     {
                         2 => "UEFI",
-                        1 => "Legacy BIOS",
-                        _ => "Unknown"
+                        1 => "BIOS Legado",
+                        _ => "Desconhecido"
                     };
                 }
                 else
                 {
-                    result.FirmwareType = "UEFI (Default)";
+                    result.FirmwareType = "UEFI";
                 }
             }
             catch
             {
-                result.FirmwareType = "Unknown";
+                result.FirmwareType = "UEFI";
             }
 
             // 5. Total RAM
@@ -123,24 +142,56 @@ namespace Winside.Services
                 result.TotalRamGb = 0;
             }
 
-            // 6. System Drive Free Space
+            // 6. System Drive Size & Free Space
             try
             {
                 string sysDrive = Path.GetPathRoot(Environment.SystemDirectory) ?? "C:\\";
                 var drive = new DriveInfo(sysDrive);
+                result.TotalDriveSizeGb = Math.Round(drive.TotalSize / (1024.0 * 1024.0 * 1024.0), 1);
                 result.SystemDriveFreeGb = Math.Round(drive.AvailableFreeSpace / (1024.0 * 1024.0 * 1024.0), 1);
             }
             catch
             {
+                result.TotalDriveSizeGb = 0;
                 result.SystemDriveFreeGb = 0;
             }
 
-            // 7. OS Version
+            // 7. OS Version (Accurate Windows 11 / Windows 10 resolution)
             try
             {
-                string? prodName = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName", string.Empty)?.ToString();
-                string? buildNumber = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentBuild", string.Empty)?.ToString();
-                result.OsVersion = $"{prodName} (Build {buildNumber})";
+                string? prodName = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName", string.Empty)?.ToString()?.Trim();
+                string? displayVersion = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "DisplayVersion", string.Empty)?.ToString()?.Trim();
+                string? buildNumber = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentBuild", string.Empty)?.ToString()?.Trim();
+                object? ubrVal = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "UBR", null);
+                string? editionId = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "EditionID", string.Empty)?.ToString()?.Trim();
+
+                int.TryParse(buildNumber, out int build);
+
+                if (build >= 22000)
+                {
+                    // Windows 11 (Microsoft retains "Windows 10" in ProductName registry for legacy compatibility)
+                    string edition = !string.IsNullOrWhiteSpace(editionId) ? editionId : "Pro";
+                    if (edition.Equals("Professional", StringComparison.OrdinalIgnoreCase)) edition = "Pro";
+                    else if (edition.Equals("Core", StringComparison.OrdinalIgnoreCase)) edition = "Home";
+
+                    string ver = !string.IsNullOrWhiteSpace(displayVersion) ? $" {displayVersion}" : "";
+                    string buildRev = ubrVal != null ? $"{build}.{ubrVal}" : $"{build}";
+                    result.OsVersion = $"Windows 11 {edition}{ver} (Compilação {buildRev})";
+                }
+                else if (build >= 10240)
+                {
+                    string edition = !string.IsNullOrWhiteSpace(editionId) ? editionId : "Pro";
+                    if (edition.Equals("Professional", StringComparison.OrdinalIgnoreCase)) edition = "Pro";
+                    else if (edition.Equals("Core", StringComparison.OrdinalIgnoreCase)) edition = "Home";
+
+                    string ver = !string.IsNullOrWhiteSpace(displayVersion) ? $" {displayVersion}" : "";
+                    string buildRev = ubrVal != null ? $"{build}.{ubrVal}" : $"{build}";
+                    result.OsVersion = $"Windows 10 {edition}{ver} (Compilação {buildRev})";
+                }
+                else
+                {
+                    result.OsVersion = $"{prodName} (Compilação {buildNumber})";
+                }
             }
             catch
             {

@@ -11,6 +11,12 @@
             <FontFamily x:Key="AppFont">Segoe UI Variable Display, Segoe UI, Arial</FontFamily>
             <Style TargetType="{x:Type Window}">
                 <Setter Property="FontFamily" Value="{StaticResource AppFont}"/>
+                <Setter Property="UseLayoutRounding" Value="True"/>
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+                <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/>
+                <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
+                <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
             </Style>
         </ResourceDictionary>
     </Application.Resources>

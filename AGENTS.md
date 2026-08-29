@@ -7,5 +7,10 @@ This repository follows strict **Caveman** and **Ponytail** principles for agent
 - [Ponytail Rule](file:///.agents/rules/ponytail.md): Pragmatic, lean, YAGNI-driven, and high-performance code design.
 
 ## Project Structure
-- `Win11QuickInstaller/`: Winside - Modern C# WPF Windows 11 Deployment & Installer Application (.NET 8/10).
-- `Windows11_QuickInstaller.ps1`: Legacy PowerShell 5.1 standalone installer script.
+- `Winside/`: Next-Gen Windows 11 Deployment & Compatibility Suite (.NET 8 WPF).
+  - Minimalist icon-only sidebar navigation (clean, distraction-free UX).
+  - Dynamic bilingual localization (PT-BR / EN-US instant toggle).
+  - Deep dark slate & electric blue high-contrast theme (`ModernTheme.xaml`).
+  - High-DPI subpixel ClearType rendering and layout pixel rounding.
+  - Accurate Windows 11 24H2/25H2 OS detection and CPU SSE4.2/POPCNT instruction auditing.
+- `assets/`: High-resolution banners, logo images, and icons (`winside-logo.png`, `winside.ico`).
